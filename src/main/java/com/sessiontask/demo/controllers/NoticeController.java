@@ -53,6 +53,7 @@ public class NoticeController {
         notice.content = content;
         notice.published = new Date();
 
+
         if (image != null) {
             notice.image = image.getBytes();
         }
@@ -95,6 +96,7 @@ public class NoticeController {
 
     @RequestMapping(value = "/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
     public void deleteEntry(HttpServletResponse response, @RequestParam int id) throws IOException {
+        Notice notice = noticeService.getNotice(id);
         noticeService.deleteNotice(id);
         response.sendRedirect("/");
     }

@@ -1,9 +1,7 @@
 package com.sessiontask.demo.services;
 
 import com.sessiontask.demo.models.Comment;
-import com.sessiontask.demo.models.Notice;
 import com.sessiontask.demo.repository.CommentRepository;
-import com.sessiontask.demo.repository.NoticeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -17,32 +15,32 @@ public class CommentService {
     DataSource dataSource;
 
     @Autowired
-   CommentRepository CommentRepository;
+   CommentRepository commentRepository;
 
     public CommentService(){
 
     }
     public Comment getComment(int id) {
-        return CommentRepository.findById(id).get();
+        return commentRepository.findById(id).get();
     }
 
     public List<Comment> getAllComments() {
-        return CommentRepository.findAll(Sort.by(Sort.Direction.DESC, "published"));
+        return commentRepository.findAll(Sort.by(Sort.Direction.DESC, "published"));
     }
 
     public void deleteComments(int id) {
 
-        CommentRepository.deleteById(id);
+        commentRepository.deleteById(id);
     }
 
     public void addComments(Comment comment) {
 
-        CommentRepository.save(comment);
+        commentRepository.save(comment);
     }
 
     public void updateComment(Comment comment) {
 
-        CommentRepository.save(comment);
+        commentRepository.save(comment);
     }
 
 

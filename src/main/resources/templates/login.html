@@ -12,7 +12,7 @@
     <span class="text-danger"><strong>Log in</strong></span>
     <br>
     <br>
-<form th:object="${user}" method="post" action="#" th:action="@{/login}">
+<form th:object="${user}" method="post" action="#" th:action="@{/loginn}">
     <span class="text-danger">Username</span>
    <input class="form-control" type="text" th:field="*{userName}">
     <br>
@@ -21,6 +21,10 @@
     <br>
     <input type="submit" value="Submit" class="btn btn-primary">
 </form>
+    <br>
+   <!-- <form action="/registerPage" method="get">
+        <button class="btn btn-outline-primary float-left">Create new account</button>
+    </form>-->
     <br>
     <form action="/" method="get">
         <button class="btn btn-outline-primary float-left">Back to start</button>

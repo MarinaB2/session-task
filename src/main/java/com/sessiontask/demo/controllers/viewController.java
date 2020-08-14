@@ -6,6 +6,7 @@ import com.sessiontask.demo.services.NoticeService;
 import com.sessiontask.demo.services.UserService;
 import com.sessiontask.demo.utils.SessionKeeper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.List;
 
 
 @Controller
@@ -57,20 +59,52 @@ private UserService userService;
       }
    }*/
 
-    @GetMapping("/login")
+    @GetMapping("/loginn")
     public String login(Model model) {
         model.addAttribute("user", new TheUser());
         return "login";
     }
 
-   @PostMapping("login")
+    @GetMapping("/registerPage")
+    public String registerPage(Model model) {
+        model.addAttribute("user", new TheUser());
+        return "register";
+    }
+/*
+   @RequestMapping(value = "/register", method = {RequestMethod.POST}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void addNewUser(HttpServletResponse response, @RequestParam String username, String password) throws IOException {
+        TheUser user = new TheUser();
+        user.userName = username;
+        user.password = password;
+
+
+        userService.addUser(user);
+        response.sendRedirect("/");*/
+
+    @PostMapping ("/register")
+    public void  register(@ModelAttribute("user") TheUser user, HttpServletResponse response, Model model) throws IOException {
+        var allUsers = userService.getAllUsers();
+
+       var userExists = allUsers
+                .stream()
+                .anyMatch(x -> x.getUserName().equals(user.getUserName()));
+
+
+        if (!userExists) {
+            userService.addUser(user);
+            response.sendRedirect("loginn");
+        } else {
+           response.sendRedirect("register");
+        }
+    }
+   @PostMapping("loginn")
    public void logIn(@ModelAttribute("user") TheUser user, HttpServletResponse response, HttpSession session) throws IOException{
        var allUsers = userRepository.findAll();
 
-      var validLogin = allUsers.stream().anyMatch((x -> x.getUserName().equals((user.getUserName()))  && x.getPassword().equals(user.getPassword()) ));
+      var validLogin = allUsers.stream().anyMatch((x -> x.getUserName().equals(("admin"))  && x.getPassword().equals("admin") ));
 
     for(TheUser bu : allUsers){
-          if(bu.getUserName().equals(user.getUserName()) && bu.getPassword().equals(user.getPassword()));
+          if(bu.getUserName().equals("admin") && bu.getPassword().equals("admin"));
           validLogin = true;
           break;
       }

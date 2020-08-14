@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/journal/bootstrap.min.css"
+      integrity="sha384-QDSPDoVOoSWz2ypaRUidLmLYl4RyoBWI44iA5agn6jHegBxZkNqgm2eHb6yZ5bYs" crossorigin="anonymous">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+
+<body>
+<div class="jumbotron container text-center col-lg-8 col-lg-offset-3">
+    <span class="text-danger"><strong>Create account </strong></span>
+    <br>
+    <br>
+    <form th:object="${user}" method="post" th:action="@{/register}"  onsubmit="return checkUserInput()">
+        <span class="text-danger">Username</span>
+        <input class="form-control" type="text"  id="username" th:field="*{userName}">
+        <br>
+        <span class="text-danger">Password</span>
+        <input class="form-control" type="text" id="password" th:field="*{password}">
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+    <form action="/" method="get">
+        <button class="btn btn-outline-primary float-left">Back to start</button>
+    </form>
+</div>
+<script>
+    function checkUserInput() {
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        if (username.length == 0) {
+            alert("username is mandatory!");
+            return false;
+        } else if (password.length == 0) {
+            alert("Password is mandatory");
+            return false;
+        }
+        alert("User added!");
+        submitOK = true;
+    }
+
+</script>
+</body>
+</html>

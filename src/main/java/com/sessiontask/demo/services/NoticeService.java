@@ -16,29 +16,29 @@ public class NoticeService {
     DataSource dataSource;
 
     @Autowired
-    NoticeRepository entryRepository;
+    NoticeRepository noticeRepository;
 
     public NoticeService(){
 
     }
         public Notice getNotice(int id) {
-            return entryRepository.findById(id).get();
+            return noticeRepository.findById(id).get();
         }
 
         public List<Notice> getAllNotices() {
-            return entryRepository.findAll(Sort.by(Sort.Direction.DESC, "published"));
+            return noticeRepository.findAll(Sort.by(Sort.Direction.DESC, "published"));
         }
 
         public void deleteNotice(int id) {
-            entryRepository.deleteById(id);
+            noticeRepository.deleteById(id);
         }
 
         public void addNotice(Notice notice) {
-            entryRepository.save(notice);
+            noticeRepository.save(notice);
         }
 
         public void updateNotice(Notice notice) {
-            entryRepository.save(notice);
+            noticeRepository.save(notice);
         }
 
 
