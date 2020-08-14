@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/journal/bootstrap.min.css"
+      integrity="sha384-QDSPDoVOoSWz2ypaRUidLmLYl4RyoBWI44iA5agn6jHegBxZkNqgm2eHb6yZ5bYs" crossorigin="anonymous">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
+
 <body>
-<span></span>
+<div class="jumbotron container text-center col-lg-8 col-lg-offset-3">
+    <span class="text-danger"><strong>Log in</strong></span>
+    <br>
+    <br>
 <form th:object="${user}" method="post" action="#" th:action="@{/login}">
-    <span>Username</span>
+    <span class="text-danger">Username</span>
    <input class="form-control" type="text" th:field="*{userName}">
-    <span>Password</span>
+    <br>
+    <span class="text-danger">Password</span>
     <input class="form-control" type="text" th:field="*{password}">
-    <input type="submit" value="submit">
+    <br>
+    <input type="submit" value="Submit" class="btn btn-primary">
 </form>
+    <br>
+    <form action="/" method="get">
+        <button class="btn btn-outline-primary float-left">Back to start</button>
+    </form>
+</div>
 </body>
 </html>

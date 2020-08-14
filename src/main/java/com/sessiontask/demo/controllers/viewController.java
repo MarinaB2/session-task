@@ -1,33 +1,28 @@
 package com.sessiontask.demo.controllers;
 
-import com.sessiontask.demo.models.Comment;
-import com.sessiontask.demo.models.Notice;
 import com.sessiontask.demo.models.TheUser;
 import com.sessiontask.demo.repository.UserRepository;
-import com.sessiontask.demo.services.CommentService;
 import com.sessiontask.demo.services.NoticeService;
 import com.sessiontask.demo.services.UserService;
-import com.sessiontask.demo.utils.Password;
 import com.sessiontask.demo.utils.SessionKeeper;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.ByteArrayInputStream;
+
+import javax.servlet.http.*;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
+
 
 @Controller
-public class viewController {
+public class viewController implements HttpSessionListener {
+
+
+    public void sessionCreated(HttpSessionEvent event){
+        event.getSession().setMaxInactiveInterval(15); // in seconds
+    }
+
     @Autowired
     private UserRepository userRepository;
 
@@ -81,6 +76,7 @@ private UserService userService;
       }
       if(validLogin){
           SessionKeeper.getInstance().AddSession(session.getId());
+
       }
       response.sendRedirect("/");
    }
@@ -88,5 +84,15 @@ private UserService userService;
    private boolean checkUserSession(String sessionId){
        return SessionKeeper.getInstance().CheckSession(sessionId);
    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session, Model model) {
+       session.setMaxInactiveInterval(15);
+        session.invalidate();
+        model.addAttribute("notices", noticeService.getAllNotices());
+       return "index";
+    }
+
+
 }
 

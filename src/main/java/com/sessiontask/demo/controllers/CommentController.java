@@ -4,6 +4,7 @@ import com.sessiontask.demo.models.Comment;
 import com.sessiontask.demo.models.Notice;
 import com.sessiontask.demo.models.TheUser;
 import com.sessiontask.demo.services.CommentService;
+import com.sessiontask.demo.services.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -24,19 +25,24 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private NoticeService noticeService;
+
     @GetMapping("/listComments")
-    public String listcomments(Model model) {
+    public String listcomments(@RequestParam int id, Model model) {
+        Notice notice = noticeService.getNotice(id);
         model.addAttribute("comments", commentService.getAllComments());
         return "listComments";
     }
 
     @RequestMapping(value = "/comment", method = {RequestMethod.POST, RequestMethod.GET}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void addNewComment(HttpServletResponse response, @RequestParam String title, String content, MultipartFile image, TheUser userId) throws IOException {
+    public void addNewComment(HttpServletResponse response, @RequestParam String title, String content, MultipartFile image, TheUser userId, int id) throws IOException {
+        Notice notice = noticeService.getNotice(id);
         Comment comment = new Comment();
         comment.title = title;
         comment.content = content;
         comment.published = new Date();
-
+       // comment.noticeId = notice;
         if (image != null) {
             comment.image = image.getBytes();
         }

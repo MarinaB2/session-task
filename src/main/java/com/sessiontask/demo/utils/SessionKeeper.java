@@ -1,11 +1,19 @@
 package com.sessiontask.demo.utils;
 
+import com.sessiontask.demo.models.TheUser;
+
 import java.util.HashSet;
 
 public class SessionKeeper {
     private static SessionKeeper sessionKeeperInstance = null;
 
     private HashSet<String> validSessions = new HashSet<>();
+
+    private TheUser userSession = new TheUser();
+
+    public TheUser getUserSession() {
+        return userSession;
+    }
 
     public boolean CheckSession(String session) {
 

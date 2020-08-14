@@ -37,7 +37,7 @@
                 <img class="card-img-top" th:src="@{'notice/image/' + ${notice.id}}">
                 <br>
 
-                <a th:href="@{/comment/(id=${notice.id})}" class="card-link" type="submit">Comment</a>
+                <a th:href="@{/listComments/(id=${notice.id})}" class="card-link" type="submit">Show comments</a>
 
             </div>
         </div>
