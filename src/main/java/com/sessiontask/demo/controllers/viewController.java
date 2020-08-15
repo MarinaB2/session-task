@@ -6,7 +6,6 @@ import com.sessiontask.demo.services.NoticeService;
 import com.sessiontask.demo.services.UserService;
 import com.sessiontask.demo.utils.SessionKeeper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +31,8 @@ public class viewController implements HttpSessionListener {
     private NoticeService noticeService;
 
 
-@Autowired
-private UserService userService;
+ @Autowired
+ private UserService userService;
 
     @GetMapping("/")
     public String listNotices(HttpServletResponse response, HttpSession session, Model model){
@@ -59,7 +58,7 @@ private UserService userService;
       }
    }*/
 
-    @GetMapping("/loginn")
+    @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("user", new TheUser());
         return "login";
@@ -70,57 +69,70 @@ private UserService userService;
         model.addAttribute("user", new TheUser());
         return "register";
     }
-/*
-   @RequestMapping(value = "/register", method = {RequestMethod.POST}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void addNewUser(HttpServletResponse response, @RequestParam String username, String password) throws IOException {
-        TheUser user = new TheUser();
-        user.userName = username;
-        user.password = password;
+
+   @RequestMapping(value = "/register", method = {RequestMethod.POST})
+    public void addNewUser(HttpServletResponse response, @RequestParam String username, String userpassword) throws IOException {
+       TheUser user = new TheUser();
+       user.username = username;
+       user.userpassword = userpassword;
 
 
-        userService.addUser(user);
-        response.sendRedirect("/");*/
+       userService.addUser(user);
+       response.sendRedirect("login");
+   }
 
-    @PostMapping ("/registerNew")
-    public void register(@ModelAttribute("user") TheUser user, HttpServletResponse response) throws IOException {
+  /*  @PostMapping ("/registerNew")
+    public void register(@ModelAttribute("user") TheUser user, HttpServletResponse response, String username, String userpassword) throws IOException {
         var allUsers = userService.getAllUsers();
 
        var userExists = allUsers
                 .stream()
-                .anyMatch(x -> x.getUserName().equals(user.getUserName()));
+                .anyMatch(x -> x.getUsername().equals(user.getUsername()));
 
+    if(!userExists){
+        user.getUsername();
+     user.getUserpassword();
+    userRepository.save(user);
+    response.sendRedirect("login");
+    }*/
+          //  user.setUserUsername(user.getUsername());
+         //   user.setUserPassword(user.getPassword());
+   // }
 
-        if (!userExists) {
-            user.setUserUsername(user.getUserName());
-            user.setUserPassword(user.getPassword());
-            response.sendRedirect("loginn");
-        } else {
-           response.sendRedirect("register");
+   @RequestMapping("logIN")
+   public void logIN(HttpServletResponse response, HttpSession session, @RequestParam String username, String password) throws IOException{
+        if(username.equals("admin") && password.equals("admin")){
+            SessionKeeper.getInstance().addSession(session.getId());
+
+           session.setMaxInactiveInterval(600);//logout automatically if the user not active for 10 minuets
+
         }
-    }
 
-   @PostMapping("login")
-   public void logIn(@ModelAttribute("user") TheUser user, HttpServletResponse response, HttpSession session) throws IOException{
-      var allUsers = userService.getAllUsers();
+       response.sendRedirect("/");
+        }
 
-     boolean validLogin = allUsers
+
+    //This method dosn't work, the value is always false it doesn't get the right input of some reason
+   @PostMapping("logIn")
+   public void logIn(@ModelAttribute("user") TheUser user, HttpServletResponse response, HttpSession session, @RequestParam String username, String userpassword) throws IOException{
+      List<TheUser> allUsers = userService.getAllUsers();
+
+    /* boolean validLogin = allUsers
               .stream()
-              .anyMatch((x -> x.getUserName().equals((user.getUserName()))
-                      && x.getPassword().equals(user.getPassword()) ));
-
-  /* for(TheUser bu : allUsers){
-       boolean validLogin = false;
-          if(bu.getUserName().equals(user.getUserName()) && bu.getPassword().equals(user.getPassword())){
-              validLogin = true;
+              .anyMatch(x -> x.getUsername().equals(user.getUsername())
+                      && x.getUserpassword().equals(user.getUserpassword()));*/
+      for(TheUser theUser: allUsers){
+          if(theUser.getUsername().equals(username) && theUser.getUserpassword().equals(userpassword)){
+              SessionKeeper.getInstance().addSession(session.getId());
+              //       SessionKeeper.getInstance().addUserSession(user);
+              session.setMaxInactiveInterval(600);
           }
-
-          break;
-      }*/
-       if(validLogin){
-           SessionKeeper.getInstance().AddSession(session.getId());
-           SessionKeeper.getInstance().addUserSession(user);
-
-       }
+      }
+     /*  if(validLogin){
+           SessionKeeper.getInstance().addSession(session.getId());
+    //       SessionKeeper.getInstance().addUserSession(user);
+           session.setMaxInactiveInterval(600);//logout automatically if the user not active for 10 minuets
+       }*/
       response.sendRedirect("/");
    }
 

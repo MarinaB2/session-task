@@ -22,7 +22,7 @@ public class SessionKeeper {
         return validSessions.contains(session);
     }
 
-    public void AddSession(String session){
+    public void addSession(String session){
 
         validSessions.add(session);
     }

@@ -12,24 +12,25 @@ public class TheUser {
     public Integer id;
 
     @Column(nullable = false)
-    public String userName;
+    public String username;
 
     @Column(nullable = false)
-    public String password;
+    public String userpassword;
 
-    public String getUserName(){
-        return userName;
+    
+    public String getUsername(){
+        return username;
 
-    } public String getPassword(){
+    } public String getUserpassword(){
 
-        return password;
+        return userpassword;
     }
     public void setUserUsername(String username) {
-        this.userName = username;
+        this.username = username;
     }
 
-    public void setUserPassword(String password) {
-        this.password = password;
+    public void setUserpassword(String password) {
+        this.userpassword = password;
     }
 
 }
