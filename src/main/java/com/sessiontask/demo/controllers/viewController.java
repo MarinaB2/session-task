@@ -70,7 +70,7 @@ public class viewController implements HttpSessionListener {
         return "register";
     }
 
-   @RequestMapping(value = "/register", method = {RequestMethod.POST})
+   @PostMapping(value = "/register")
     public void addNewUser(HttpServletResponse response, @RequestParam String username, String userpassword) throws IOException {
        TheUser user = new TheUser();
        user.username = username;
