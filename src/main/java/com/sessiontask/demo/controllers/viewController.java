@@ -100,8 +100,8 @@ public class viewController implements HttpSessionListener {
    // }
 
    @RequestMapping("logIN")
-   public void logIN(HttpServletResponse response, HttpSession session, @RequestParam String username, String password) throws IOException{
-        if(username.equals("admin") && password.equals("admin")){
+   public void logIN(HttpServletResponse response, HttpSession session, @RequestParam String username, String userpassword) throws IOException{
+        if(username.equals("admin") && userpassword.equals("admin")){
             SessionKeeper.getInstance().addSession(session.getId());
 
            session.setMaxInactiveInterval(600);//logout automatically if the user not active for 10 minuets
