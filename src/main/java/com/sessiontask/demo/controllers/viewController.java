@@ -81,8 +81,8 @@ private UserService userService;
         userService.addUser(user);
         response.sendRedirect("/");*/
 
-    @PostMapping ("/register")
-    public void  register(@ModelAttribute("user") TheUser user, HttpServletResponse response, Model model) throws IOException {
+    @PostMapping ("/registerNew")
+    public void register(@ModelAttribute("user") TheUser user, HttpServletResponse response) throws IOException {
         var allUsers = userService.getAllUsers();
 
        var userExists = allUsers
@@ -91,27 +91,36 @@ private UserService userService;
 
 
         if (!userExists) {
-            userService.addUser(user);
+            user.setUserUsername(user.getUserName());
+            user.setUserPassword(user.getPassword());
             response.sendRedirect("loginn");
         } else {
            response.sendRedirect("register");
         }
     }
-   @PostMapping("loginn")
+
+   @PostMapping("login")
    public void logIn(@ModelAttribute("user") TheUser user, HttpServletResponse response, HttpSession session) throws IOException{
-       var allUsers = userRepository.findAll();
+      var allUsers = userService.getAllUsers();
 
-      var validLogin = allUsers.stream().anyMatch((x -> x.getUserName().equals(("admin"))  && x.getPassword().equals("admin") ));
+     boolean validLogin = allUsers
+              .stream()
+              .anyMatch((x -> x.getUserName().equals((user.getUserName()))
+                      && x.getPassword().equals(user.getPassword()) ));
 
-    for(TheUser bu : allUsers){
-          if(bu.getUserName().equals("admin") && bu.getPassword().equals("admin"));
-          validLogin = true;
+  /* for(TheUser bu : allUsers){
+       boolean validLogin = false;
+          if(bu.getUserName().equals(user.getUserName()) && bu.getPassword().equals(user.getPassword())){
+              validLogin = true;
+          }
+
           break;
-      }
-      if(validLogin){
-          SessionKeeper.getInstance().AddSession(session.getId());
+      }*/
+       if(validLogin){
+           SessionKeeper.getInstance().AddSession(session.getId());
+           SessionKeeper.getInstance().addUserSession(user);
 
-      }
+       }
       response.sendRedirect("/");
    }
 

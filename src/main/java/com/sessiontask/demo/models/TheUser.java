@@ -24,5 +24,12 @@ public class TheUser {
 
         return password;
     }
+    public void setUserUsername(String username) {
+        this.userName = username;
+    }
+
+    public void setUserPassword(String password) {
+        this.password = password;
+    }
 
 }

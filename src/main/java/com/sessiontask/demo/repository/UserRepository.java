@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<TheUser, Integer> {
     TheUser getById(int id);
+
+    TheUser getTheUsersByUserName(String username);
 }

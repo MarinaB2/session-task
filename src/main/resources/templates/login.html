@@ -12,14 +12,14 @@
     <span class="text-danger"><strong>Log in</strong></span>
     <br>
     <br>
-<form th:object="${user}" method="post" action="#" th:action="@{/loginn}">
+<form th:object="${user}" method="post" action="#" th:action="@{/login}">
     <span class="text-danger">Username</span>
    <input class="form-control" type="text" th:field="*{userName}">
     <br>
     <span class="text-danger">Password</span>
     <input class="form-control" type="text" th:field="*{password}">
     <br>
-    <input type="submit" value="Submit" class="btn btn-primary">
+    <button type="submit"  class="btn btn-primary">Log in</button>
 </form>
     <br>
    <form action="/registerPage" method="get">
