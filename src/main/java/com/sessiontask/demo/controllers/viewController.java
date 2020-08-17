@@ -124,8 +124,9 @@ public class viewController implements HttpSessionListener {
       for(TheUser theUser: allUsers){
           if(theUser.getUsername().equals(username) && theUser.getUserpassword().equals(userpassword)){
               SessionKeeper.getInstance().addSession(session.getId());
-              //       SessionKeeper.getInstance().addUserSession(user);
-              session.setMaxInactiveInterval(600);
+                 SessionKeeper.getInstance().addUserSession(user);
+//              session.setMaxInactiveInterval(600);
+              //logout automatically if the user not active for 10 minuets
           }
       }
      /*  if(validLogin){
@@ -137,7 +138,7 @@ public class viewController implements HttpSessionListener {
    }
 
    private boolean checkUserSession(String sessionId){
-       return SessionKeeper.getInstance().CheckSession(sessionId);
+       return SessionKeeper.getInstance().checkSession(sessionId);
    }
 
     @GetMapping("/logout")

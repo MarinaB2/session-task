@@ -17,7 +17,7 @@ public class SessionKeeper {
 
     public void addUserSession(TheUser user) { userSession = user; }
 
-    public boolean CheckSession(String session) {
+    public boolean checkSession(String session) {
 
         return validSessions.contains(session);
     }

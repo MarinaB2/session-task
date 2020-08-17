@@ -20,11 +20,17 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public UserService(){
+    public UserService() {
 
     }
+
     public TheUser getUser(int id) {
+
         return userRepository.findById(id).get();
+    }
+
+    public TheUser getUserId(int id) {
+        return userRepository.getById(id);
     }
 
     public void addUser(TheUser user) {
@@ -35,9 +41,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-
-
-
-
-
+    public TheUser getUserByUsername(String username) {
+        return userRepository.getTheUsersByUsername(username);
+    }
 }

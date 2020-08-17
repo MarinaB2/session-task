@@ -14,10 +14,10 @@
     <br>
     <form th:object="${user}" method="post" th:action="@{/register}"  onsubmit="return checkUserInput()">
         <span class="text-danger">Username</span>
-        <input class="form-control" type="text"  id="username" name="username">
+        <input class="form-control" type="text"  th:field="*{username}">
         <br>
         <span class="text-danger">Password</span>
-        <input class="form-control" type="text" id="password" name="userpassword" >
+        <input class="form-control" type="text"  th:field="*{userpassword}">
         <br>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

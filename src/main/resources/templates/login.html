@@ -12,19 +12,19 @@
     <span class="text-danger"><strong>Log in</strong></span>
     <br>
     <br>
-<form th:object="${user}" method="post" action="#" th:action="@{/logIN}">
+<form th:object="${user}" method="post" action="#" th:action="@{/logIn}">
     <span class="text-danger">Username</span>
-   <input class="form-control" type="text" name="username" >
+   <input class="form-control" type="text" th:field="*{username}">
     <br>
     <span class="text-danger">Password</span>
-    <input class="form-control" type="text" name="userpassword" >
+    <input class="form-control" type="text"  th:field="*{userpassword}">
     <br>
     <button type="submit"  class="btn btn-primary">Log in</button>
 </form>
     <br>
-   <!--<form action="/registerPage" method="get">
+   <form action="/registerPage" method="get">
         <button class="btn btn-outline-primary float-left">Create new account</button>
-    </form>-->
+    </form>
     <br>
     <form action="/" method="get">
         <button class="btn btn-outline-primary float-left">Back to start</button>

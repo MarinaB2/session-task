@@ -11,13 +11,12 @@
 <div class="jumbotron container text-center col-lg-8 col-lg-offset-3">
     <h1 class="text-danger"><strong>Welcome</strong></h1>
     <br>
-
     <form class="form-group" action="/add" method="post" onsubmit="return checkUserInput()" enctype="multipart/form-data">
         <div class="form-group">
-
             <input type="text" class="form-control" placeholder="Write title here" id="title" name="title">
             <br>
             <textarea class="form-control" id="content" name="content" rows="3" placeholder="Content"></textarea>
+            <input type="hidden" th:value="${user.id}" name="id">
         </div>
 
         <label for="image" style="float: left">Upload image</label>

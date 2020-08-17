@@ -14,7 +14,7 @@
 
     <form class="form-group" action="/comment" method="post" onsubmit="return checkUserInput()" enctype="multipart/form-data">
         <div class="form-group">
-
+            <input type="hidden" th:value="${notice.id}" id="id" name="id">
             <input type="text" class="form-control" placeholder="Write title here" id="title" name="title">
             <br>
             <textarea class="form-control" id="content" name="content" rows="3" placeholder="Content"></textarea>

@@ -22,7 +22,7 @@ public class Notice {
     @Column(nullable = false)
     public Date published;
 
- @ManyToOne
+    @ManyToOne
     public TheUser userId;
 
 
